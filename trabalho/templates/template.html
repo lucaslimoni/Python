@@ -1,54 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <title> </title>
+<title> </title>
 
-  <head>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"
-    ></script>
-  </head>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
 
-  <body>
+<body>
     <div>
-      <a href="/form" class="m-1 float-left btn btn-warning"
-        >+ Adicionar</a
-      >
+        <a href="/form" class="m-1 float-left btn btn-warning">+ Adicionar</a>
     </div>
     <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      {%for pessoa in pessoas%}
-      <tbody>
-        <tr class="table-success">
-          <td>{{ pessoa.Nome }}</td>
-          <td>
-            <form action="{{ url_for('deleteContato', id=pessoa.idPessoa) }}" method="post">
-              <button type="submit" class="m-1 float-right btn btn-danger" name="id" value="{{ pessoa.pessoaId }}">
-                Deletar
-              </button>
-            </form>
-            <a  href="/editar/{{pessoa.pessoaId}}"class="m-1 float-right btn btn-primary">
-              Editar
-            </a>
-            <a  href="/contato/{{pessoa.pessoaId}}"class="m-1 float-right btn btn-warning">
-                Contato
-            </a>
-          </td>
-        </tr>
-      </tbody>
-      {%endfor%}
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        {%for pessoa in pessoas%}
+        <tbody>
+            <tr class="table-success">
+                <td>{{ pessoa.Nome }}</td>
+                <td>
+                    <form action="{{ url_for('deleteContato', id=pessoa.idPessoa) }}" method="post">
+                        <button type="submit" class="m-1 float-right btn btn-danger" name="id" value="{{ pessoa.pessoaId }}">
+                            Deletar
+                        </button>
+                    </form>
+                    <a href="/editar/{{pessoa.pessoaId}}" class="m-1 float-right btn btn-primary">
+                        Editar
+                    </a>
+                    <a href="/contato/{{pessoa.pessoaId}}" class="m-1 float-right btn btn-warning">
+                        Contato
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        {%endfor%}
     </table>
     <!-- <div class="alert alert-primary" role="alert">
       {%for pessoa in pessoas%}
@@ -65,5 +56,6 @@
       </ul>
       {%endfor%}
     </div> -->
-  </body>
+</body>
+
 </html>

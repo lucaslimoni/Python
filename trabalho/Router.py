@@ -1,6 +1,9 @@
-from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, getEnderecoById, getTelefoneById, deleteTelefone, insertTelefones
-from flask import Flask, render_template, jsonify, request, Markup
+from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, getEnderecoById, getTelefoneById, deleteTelefone, insertTelefones, insertEndereco
+from flask import Flask, render_template, jsonify, request, Markup, session
+import secrets
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
 
 @app.route("/sharabadaias/api/getContatos")
 def getContatosApi():
@@ -18,8 +21,13 @@ def formContatos():
 def formTelefone():
     return render_template('/addtelefone.html')
 
+@app.route("/endereco")
+def formEndereco():
+    return render_template('/addEndereco.html')
+
 @app.route("/contato/<id>")
 def contatoUsuario(id):
+    session["ID_USUARIO"] = id
     return render_template('/contato.html', enderecos = getEnderecoById(id), telefones = getTelefoneById(id))
 
 @app.route("/cadastrar", methods = ['POST'])
@@ -33,11 +41,29 @@ def addContato():
 @app.route("/cadastrar/telefone", methods = ['POST'])
 def addTelefone():
     ddd = request.form.get('ddd')
-    numero = request.form.get('numero')
-    pessoaId = request.form.get('id')
+    numero = request.form.get('numeroTel')
+    pessoaId = session.get('ID_USUARIO')
     insertTelefones(ddd, numero, pessoaId)
     message = Markup("<h1>Telefone cadastrado com sucesso!</h1>")
+    
     return message
+
+@app.route("/cadastrar/endereco", methods = ['POST'])
+def addEndereco():
+    rua = request.form.get('rua')
+    numero = request.form.get('numero')
+    CEP = request.form.get('CEP')
+    bairro = request.form.get('bairro')
+    cidade = request.form.get('cidade')
+    estado = request.form.get('estado')
+    pessoaId = session.get('ID_USUARIO')
+    insertEndereco(rua, numero, CEP, bairro, cidade, estado, pessoaId)
+    message = Markup("<h1>Endereço cadastrado com sucesso!</h1>")
+    return message
+
+@app.route("/editar/<id>", methods = ["PUT"])
+def editarContato():
+    return null
 
 @app.route("/deletar", methods = ['POST'])
 def deleteContato():
