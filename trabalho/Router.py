@@ -1,10 +1,22 @@
-from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, getEnderecoById, getTelefoneById, deleteTelefone, insertTelefones
+from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, getEnderecoById, getTelefoneById, deleteTelefone, insertTelefones, getPessoaByIdAPI, getPessoaByNameAPI, getPessoaByMonthAPI
 from flask import Flask, render_template, jsonify, request, Markup
 app = Flask(__name__)
 
 @app.route("/sharabadaias/api/getContatos")
 def getContatosApi():
     return getPessoasAPI()
+
+@app.route("/sharabadaias/api/getContatoID/<id>")
+def getContatoByIdApi(id = None):
+    return getPessoaByIdAPI(id)
+
+@app.route("/sharabadaias/api/getContatoNome/<nome>")
+def getContatoByNameApi(nome = None):
+    return getPessoaByNameAPI(nome)
+
+@app.route("/sharabadaias/api/getContatoAniversario/<mes>")
+def getContatoByMonthApi(mes = None):
+    return getPessoaByMonthAPI(mes)
 
 @app.route("/")
 def getContatos():
