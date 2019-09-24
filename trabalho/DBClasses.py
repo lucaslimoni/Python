@@ -53,5 +53,5 @@ class Telefone(Base):
     Numero = Column(Integer, nullable = False)
     pessoaId = Column(Integer, ForeignKey('Pessoa.pessoaId'))
 
-engine = create_engine('mysql+pymysql://root:Lucas*856422@localhost:3306/Sharabadaias')
+engine = create_engine('mysql+pymysql://root:@localhost:3306/Sharabadaias')
 Base.metadata.create_all(engine)

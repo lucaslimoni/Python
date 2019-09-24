@@ -62,6 +62,15 @@ def getEnderecos():
     session.close()
     return enderecos
 
+def getEnderecoById(id_):
+    session = DBSession()
+    endereco = session.query(Endereco).filter_by(pessoaId = id_).all()
+    session.close()
+    end = []
+    for enderecos in endereco:
+        end.append(enderecos.__dict__)
+    return end
+
 def deleteEnderecos(id_):
     session = DBSession()
     session.query(Endereco).filter(Endereco.enderecoId == id_).delete()
@@ -79,6 +88,15 @@ def getTelefone():
     telefones = session.query(Telefone.telefoneId).all()
     session.close()
     return telefones
+
+def getTelefoneById(id_):
+    session = DBSession()
+    telefone = session.query(Telefone).filter_by(pessoaId = id_).all()
+    session.close()
+    tel = []
+    for telefones in telefone:
+        tel.append(telefones.__dict__)
+    return tel
 
 def deleteTelefone(id_):
     session = DBSession()

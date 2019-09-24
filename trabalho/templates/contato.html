@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <title> </title>
+
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">DDD</th>
+          <th scope="col">Numero</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      {%for telefone in telefones%}
+      <tbody>
+        <tr class="table-success">
+          <td>{{ telefone.DDD }}</td>
+          <td>{{ telefone.Numero }}</td>
+          <td>
+            <form action="{{ url_for('deletarTelefone', telefone=telefone.telefoneId) }}" method="post">
+              <button type="submit" class="m-1 float-right btn btn-danger" name="telefone" value="{{ telefone.telefoneId }}">
+                Deletar
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+      {%endfor%}
+    </table>
+    <div>
+        <a href="/telefone" class="m-1 float-left btn btn-warning"
+          >+ Adicionar Telefone</a
+        >
+    </div>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Rua</th>
+            <th scope="col">Numero</th>
+            <th scope="col">CEP</th>
+            <th scope="col">Bairro</th>
+            <th scope="col">Cidade</th>
+            <th scope="col">Estado</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        {%for endereco in enderecos%}
+        <tbody>
+          <tr class="table-success">
+            <td>{{ endereco.Rua }}</td>
+            <td>{{ endereco.Numero }}</td>
+            <td>{{ endereco.CEP }}</td>
+            <td>{{ endereco.Bairro }}</td>
+            <td>{{ endereco.Cidade }}</td>
+            <td>{{ endereco.Estado }}</td>
+            <td>
+              <form action="{{ url_for('deletarEndereco', id=endereco.idPessoa) }}" method="post">
+                <button type="submit" class="m-1 float-right btn btn-danger" name="endereco" value="{{ endereco.pessoaId }}">
+                  Deletar
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+        {%endfor%}
+      </table>
+      <div>
+          <a href="/form" class="m-1 float-left btn btn-warning"
+            >+ Adicionar Endereço</a
+          >
+      </div>
+  </body>
+</html>
