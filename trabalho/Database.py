@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from DBClasses import Base, Pessoa, Endereco, Telefone, engine, as_dict
 from flask import Flask, jsonify
+import json
+import datetime
 
 DBSession = sessionmaker(bind=engine)
 
@@ -25,13 +27,43 @@ def getPessoas():
 def getPessoasAPI():
     session = DBSession()
     pessoas = session.query(Pessoa).all()
-    # people = []
-    # for pessoa in pessoas:
-    #     people.append({"Lista", pessoa})
+    data = {'pessoas' : [ as_dict(pessoa) for pessoa in pessoas ] }
     session.close()
-    data = {'pessoas' : {as_dict(pessoa) for pessoa in pessoas}}
     return data
-    # return pessoas
+
+def getPessoaByIdAPI(id_):
+    session = DBSession()
+    pessoas = session.query(Pessoa).filter_by(pessoaId = id_).all()
+    data = {'contato' : [ as_dict(pessoa) for pessoa in pessoas ] }
+    session.close()
+    return data
+
+def getPessoaByNameAPI(nome_):
+    session = DBSession()
+    pessoas = session.query(Pessoa).filter_by(Nome = nome_).all()
+    data = {'pessoa(s)' : [ as_dict(pessoa) for pessoa in pessoas ] }
+    session.close()
+    return data
+
+def getPessoaByMonthAPI():
+    session = DBSession()
+    pessoas = session.query(Pessoa).all()
+
+    datas = []
+    for data in pessoas:
+        datas.append(data)
+        data = {'datanas': [datas]}
+# a = '2010-01-31'
+
+# datee = datetime.datetime.strptime(a, "%Y-%m-%d")
+
+
+# datee.month
+# Out[9]: 1
+
+#     data = {'pessoa(s)' : [ as_dict(pessoa) for pessoa in pessoas ] }
+    session.close()
+    return data
 
 def getPessoa(nome_):
     session = DBSession()
@@ -42,7 +74,6 @@ def getPessoa(nome_):
         people.append(pessoas.__dict__)
     return people
     
-
 def deletePessoa(id_):
     session = DBSession()
     session.query(Pessoa).filter(Pessoa.pessoaId == id_).delete()
@@ -71,7 +102,7 @@ def getEnderecoById(id_):
         end.append(enderecos.__dict__)
     return end
 
-def deleteEnderecos(id_):
+def deleteEndereco(id_):
     session = DBSession()
     session.query(Endereco).filter(Endereco.enderecoId == id_).delete()
     session.commit()

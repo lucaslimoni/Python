@@ -1,4 +1,4 @@
-from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, getEnderecoById, getTelefoneById, deleteTelefone, insertTelefones, insertEndereco
+from Database import getPessoas, getPessoasAPI, insertPessoa, deletePessoa, insertEndereco, getEnderecoById, getTelefoneById, deleteEndereco, deleteTelefone, insertTelefones, getPessoaByIdAPI, getPessoaByNameAPI, getPessoaByMonthAPI
 from flask import Flask, render_template, jsonify, request, Markup, session
 import secrets
 app = Flask(__name__)
@@ -8,6 +8,18 @@ app.config["SECRET_KEY"] = "OCML3BRawWEUeaxcuKHLpw"
 @app.route("/sharabadaias/api/getContatos")
 def getContatosApi():
     return getPessoasAPI()
+
+@app.route("/sharabadaias/api/getContatoID/<id>")
+def getContatoByIdApi(id = None):
+    return getPessoaByIdAPI(id)
+
+@app.route("/sharabadaias/api/getContatoNome/<nome>")
+def getContatoByNameApi(nome = None):
+    return getPessoaByNameAPI(nome)
+
+@app.route("/sharabadaias/api/getContatoAniversario/<mes>")
+def getContatoByMonthApi(mes = None):
+    return getPessoaByMonthAPI(mes)
 
 @app.route("/")
 def getContatos():
@@ -34,9 +46,11 @@ def contatoUsuario(id):
 def addContato():
     user = request.form.get('user')
     datanas = request.form.get('datanas')
-    insertPessoa(user, datanas)
-    message = Markup("<h1>Usuário cadastrado com sucesso!</h1>")
-    return message
+    
+    if (datanas and user):
+        insertPessoa(user, datanas)
+        message = Markup("<h1>Usuário cadastrado com sucesso!</h1>")
+        return message
 
 @app.route("/cadastrar/telefone", methods = ['POST'])
 def addTelefone():

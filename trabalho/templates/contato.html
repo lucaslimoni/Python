@@ -68,8 +68,8 @@
             <td>{{ endereco.Cidade }}</td>
             <td>{{ endereco.Estado }}</td>
             <td>
-              <form action="{{ url_for('deletarEndereco', id=endereco.idPessoa) }}" method="post">
-                <button type="submit" class="m-1 float-right btn btn-danger" name="endereco" value="{{ endereco.pessoaId }}">
+              <form action="{{ url_for('deletarEndereco', endereco=endereco.enderecoId) }}" method="post">
+                <button type="submit" class="m-1 float-right btn btn-danger" name="endereco" value="{{ endereco.enderecoId }}">
                   Deletar
                 </button>
               </form>
